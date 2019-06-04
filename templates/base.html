@@ -28,8 +28,9 @@
 
     <!-- Main Stylesheet File -->
     <link href="{% static 'css/style.css' %}" rel="stylesheet">
-
+    {% block cssstyle%} {% endblock %}
 </head>
+
 <body>
 
 {% include 'partials/_navbar.html'%}
@@ -56,6 +57,8 @@
 <!-- Template Main Javascript File -->
 <script src="{% static 'js/main.js' %}"></script>
 
-    
+{% block script %}
+
+{% endblock %}
 </body>
 </html>

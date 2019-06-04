@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-6">
+            <h1 class="mt-1 col-md-5" id="id1">Let's Get</h1>
+            <h1 class="mt-1 col-md-7" id="id1"><span>Started</span></h1>
+            <h1 class="mt-1 col-md-6" id="id1">Enter Your !</h1>
+            <h1 class="mt-1 col-md-10" id="id1"><span>Information</span></h1>
+        </div>
+        <div class="col-md-6">
+
+            <form class="form-horizontal" action="{% url 'register' %}" method="POST">
+                {% csrf_token %}
+                <div class="mt-5 col-md-12">
+                    <div class="control-group">
+                        <label class="control-label" for="username">company name</label>
+                        <div class="controls">
+                            <input type="text" id="username" name="company_name" placeholder=""
+                                class="form-control input-lg">
+                        </div>
+                    </div>
+
+                </div>
+                <div class="mt-4 col-md-12">
+                    <div class="control-group">
+                        <label class="control-label" for="email">E-mail</label>
+                        <div class="controls">
+                            <input type="email" id="email" name="email" placeholder=""
+                                class="form-control input-lg">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-4 col-md-12">
+                    <div class="control-group">
+                        <label class="control-label" for="password">Password</label>
+                        <div class="controls">
+                            <input type="password" id="password" name="password" placeholder=""
+                                class="form-control input-lg">
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-4 col-md-12">
+                    <div class="control-group">
+                        <label class="control-label" for="password_confirm">phone</label>
+                        <div class="controls">
+                            <input type="password" id="password_confirm" name="phone" placeholder=""
+                                class="form-control input-lg">
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-4 col-md-12">
+                    <div class="control-group">
+                        <!-- Button -->
+                        <div class="controls">
+                            <button  type="submit" class="btn btn-success">Register</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>
+{% endblock %}

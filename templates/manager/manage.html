@@ -1,0 +1,282 @@
+{% extends 'base.html' %}
+
+{%  load static %}
+
+{% block cssstyle%}
+<style>
+    body {
+        padding-top: 140px;
+      }
+    #header {
+        background: rgba(6, 12, 34, 0.98);
+    }
+    #footer{
+    margin: 75px 0px 0px  0px;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+
+<div id="vue-app">
+    <div class="container">
+        <div class="row">
+
+            <div class="col-md-6">
+                <h1 class="mt-1 col-md-8" id="id1">What do you want to manage</h1>
+                <!-- <h1 class="mt-1 col-md-7" id="id1"><span>Started</span></h1> -->
+                <button class="btn btn-info" v-on:click="changeSelectedEntity('Student')">Student</button>
+                <button class="btn btn-info" v-on:click="changeSelectedEntity('Instructor')">Instructor</button>
+                <button class="btn btn-info" v-on:click="changeSelectedEntity('Courses')">Courses</button>
+                
+                <div class="mt-5" v-show="selectedEntity !='' ">
+                    <h1 class="mt-1 col-md-8" id="id1">What action you want to do</h1>
+                    <button class="btn btn-info" v-on:click="changeSelectedAction('Add')">Add</button>
+                    <button class="btn btn-info" v-on:click="changeSelectedAction('Delete')">Delete</button>
+                </div>
+            </div>
+
+            <!-- instructor forms -->
+            
+                <!-- Delete form -->
+                <div class="col-md-6" v-show="checkSelected('1')">
+                    <p>instructor Delete</p>
+                    <form class="form-horizontal" action="" method="POST">
+
+                        <div class="mt-4 col-md-12">
+                            <div class="control-group">
+                                <label class="control-label" for="email">E-mail</label>
+                                <div class="controls">
+                                    <input type="email" id="email" name="email" placeholder=""
+                                        class="form-control input-lg">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mt-4 col-md-12">
+                            <div class="control-group">
+                                <!-- Button -->
+                                <div class="controls">
+                                    <button class="btn btn-danger">Delete</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Add form -->
+                <div class="col-md-6" v-show="checkSelected('2')">
+                    <p>Instructor Add</p>
+
+                    <form class="form-horizontal" action="{% url 'manage' %}" method="POST">
+                        {% csrf_token %}
+                        <div class="mt-5 col-md-12">
+                            <div class="control-group">
+                                <label class="control-label" for="username">Username</label>
+                                <div class="controls">
+                                    <input type="text" id="username" name="username" placeholder=""
+                                        class="form-control input-lg">
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="mt-4 col-md-12">
+                            <div class="control-group">
+                                <label class="control-label" for="email">E-mail</label>
+                                <div class="controls">
+                                    <input type="email" id="email" name="email" placeholder=""
+                                        class="form-control input-lg">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mt-4 col-md-12">
+                            <div class="control-group">
+                                <label class="control-label" for="password">Password</label>
+                                <div class="controls">
+                                    <input type="password" id="password" name="password" placeholder=""
+                                        class="form-control input-lg">
+                                </div>
+                            </div>
+                        </div>
+                       
+                        <div class="mt-4 col-md-12">
+                            <div class="control-group">
+                                <!-- Button -->
+                                <div class="controls">
+                                    <button type="submit" class="btn btn-success">Add</button>
+                                </div>
+                            </div>
+                        </div>
+                        <input name="manageType" value="addInstructor" type="hidden">
+                    </form>
+                </div>
+            
+
+
+
+            <!-- Courses form -->
+            
+                <!-- Delete form -->
+                <div class="col-md-6" v-show="checkSelected('3')">
+                    <p>Courses Delete</p>
+                    <form class="form-horizontal" action="" method="POST">
+                        <div class="mt-5 col-md-12">
+                            <div class="control-group">
+                                <label class="control-label" for="username">Code</label>
+                                <div class="controls">
+                                    <input type="text" id="username" name="username" placeholder=""
+                                        class="form-control input-lg">
+                                </div>
+                            </div>
+                        </div>
+                       
+                        <div class="mt-4 col-md-12">
+                            <div class="control-group">
+                                <!-- Button -->
+                                <div class="controls">
+                                    <button class="btn btn-danger">Delete</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+
+
+                </div>
+
+                <!-- Add form -->
+                <div class="col-md-6" v-show="checkSelected('4')">
+                    <p>Courses Add</p>
+
+                    <form class="form-horizontal" action="" method="POST">
+                        <div class="mt-5 col-md-12">
+                            <div class="control-group">
+                                <label class="control-label" for="username">Code</label>
+                                <div class="controls">
+                                    <input type="text" id="username" name="username" placeholder=""
+                                        class="form-control input-lg">
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="mt-5 col-md-12">
+                                <select class="custom-select" >
+                                    <option selected>Choose Grade...</option>
+                                    <option value="1">First</option>
+                                    <option value="2">Seconed</option>
+                                    <option value="3">Third</option>
+                                    <option value="3">Fourth</option>
+                                </select>
+                        </div>
+                        <div class="mt-5 col-md-12">
+                                    <select class="custom-select" >
+                                        <option selected>Choose Instructor...</option>
+                                        <option value="1">sami</option>
+                                        <option value="2">saed</option>
+                                        <option value="3">sameh</option>
+                                        <option value="3">abo zaed</option>
+                                    </select>
+                        </div>
+                        <div class="mt-4 col-md-12">
+                            <div class="control-group">
+                                <!-- Button -->
+                                <div class="controls">
+                                    <button class="btn btn-success">Add</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+
+
+                </div>
+            
+
+            <!-- Students form -->
+        
+                <!-- Delete form -->
+                <div class="col-md-6" v-show="checkSelected('5')">
+                    <p>Student Delete</p>
+                    <form class="form-horizontal" action="" method="POST">
+                        <div class="mt-4 col-md-12">
+                            <div class="control-group">
+                                <label class="control-label" for="email">E-mail</label>
+                                <div class="controls">
+                                    <input type="email" id="email" name="email" placeholder=""
+                                        class="form-control input-lg">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mt-4 col-md-12">
+                            <div class="control-group">
+                                <!-- Button -->
+                                <div class="controls">
+                                    <button class="btn btn-danger">Delete</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Add form -->
+                <div class="col-md-6" v-show="checkSelected('6')">
+                    <p>Student Add</p>
+
+                    <form class="form-horizontal" action="" method="POST">
+                        <div class="mt-5 col-md-12">
+                            <div class="control-group">
+                                <label class="control-label" for="username">Username</label>
+                                <div class="controls">
+                                    <input type="text" id="username" name="username" placeholder=""
+                                        class="form-control input-lg">
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="mt-4 col-md-12">
+                            <div class="control-group">
+                                <label class="control-label" for="email">E-mail</label>
+                                <div class="controls">
+                                    <input type="email" id="email" name="email" placeholder=""
+                                        class="form-control input-lg">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mt-5 col-md-12">
+                            <select class="custom-select" >
+                                <option selected>Choose Grade...</option>
+                                <option value="1">First</option>
+                                <option value="2">Seconed</option>
+                                <option value="3">Third</option>
+                                <option value="3">Fourth</option>
+                            </select>
+                        </div>
+                        <div class="mt-5 col-md-12">
+                            <label class="control-label">Photos Of Student </label>
+                            <div class="embed-responsive embed-responsive-4by3">
+                                <video class="embed-responsive-item" poster="img/camera1.png"></video>
+                            </div>
+                            <button class="btn btn-info">Take Photos</button>
+                        </div>
+                        <div class="mt-5 col-md-12">
+                            <div class="control-group">
+                                <!-- Button -->
+                                <div class="controls">
+                                    <button class="btn btn-success">Add Student</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block script%}
+  <!-- Vue script -->
+  <script src="{% static 'js/vue.js' %}"></script>
+
+  <!-- manageVue script -->
+  <script src="{% static 'js/manageVue.js' %}"></script>
+
+{% endblock %}
