@@ -4,7 +4,8 @@ from django.contrib.auth.models import User
 from django.conf import settings
 from accounts.models import Company ,Instructor
 # Create your models here.
-
+# os.mkdir(os.getcwd()+ r'/embeddings/company')
+ 
 class Grade(models.Model):
     idfk_company = models.ForeignKey(Company, on_delete=models.CASCADE, db_index =False)
     name = models.CharField(max_length=200)

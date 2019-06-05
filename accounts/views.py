@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib import auth
 from django.contrib.auth.models import User
 from accounts.models import Company , Instructor
+import os
 
 def register(request):
     
@@ -11,7 +12,7 @@ def register(request):
         email = request.POST['email']
         phone = request.POST['phone']
         password = request.POST['password']
-
+        
         # Check username
         if User.objects.filter(username=company_name).exists():
             return redirect('register')
@@ -23,14 +24,21 @@ def register(request):
     
                 # Looks good
                 user = User.objects.create_user(username=company_name, password=password,email=email)
-                # Login after register
-                # auth.login(request, user)
-                # messages.success(request, 'You are now logged in')
-                # return redirect('index')
                 user.save()
 
-                company = Company(user=user, name=company_name, email=email, phone=phone)
-                company.save()
+                # create the embeddings folder that will contain embeddings for each company
+                # it is created with the first company then it checks if exists to make it or not and it should be exits
+                basePathToEmbeddings = os.getcwd() + r'/embeddings'
+                if not (os.path.isdir( basePathToEmbeddings)):
+                    os.mkdir( basePathToEmbeddings )     
+                # create the company folder inside the embeddings folder , it will have company name
+                # we check if it exist for safety
+                companyToPathEmbeddings = basePathToEmbeddings + r'/' +company_name
+                if not (os.path.isdir(companyToPathEmbeddings)):
+                    os.mkdir(companyToPathEmbeddings)
+
+                    company = Company(user=user, name=company_name, email=email, phone=phone,pathToEmpeddings=companyToPathEmbeddings)
+                    company.save()
 
                 return redirect('login')
     else:

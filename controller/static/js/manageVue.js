@@ -41,9 +41,10 @@ new Vue({
                         return true;
                 }
             }
+            
             // Student 
             // caller == Delete 5 ------ Add 6
-            else  if (this.selectedEntity == "Student") {
+            else if (this.selectedEntity == "Student") {
                 if(this.selectedAction=="Delete")
                 {
                     if(caller =="5")
@@ -52,6 +53,20 @@ new Vue({
                 else if(this.selectedAction=="Add")
                 {
                     if(caller =="6")
+                        return true;
+                }
+            }
+            // Grades 
+            // caller == Delete 7 ------ Add 8
+            else if (this.selectedEntity == "Grades") {
+                if(this.selectedAction=="Delete")
+                {
+                    if(caller =="7")
+                        return true;
+                }
+                else if(this.selectedAction=="Add")
+                {
+                    if(caller =="8")
                         return true;
                 }
             }

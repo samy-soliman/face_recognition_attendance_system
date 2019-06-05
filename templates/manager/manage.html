@@ -28,6 +28,7 @@
                 <button class="btn btn-info" v-on:click="changeSelectedEntity('Student')">Student</button>
                 <button class="btn btn-info" v-on:click="changeSelectedEntity('Instructor')">Instructor</button>
                 <button class="btn btn-info" v-on:click="changeSelectedEntity('Courses')">Courses</button>
+                <button class="btn btn-info" v-on:click="changeSelectedEntity('Grades')">Grades</button>
                 
                 <div class="mt-5" v-show="selectedEntity !='' ">
                     <h1 class="mt-1 col-md-8" id="id1">What action you want to do</h1>
@@ -35,6 +36,7 @@
                     <button class="btn btn-info" v-on:click="changeSelectedAction('Delete')">Delete</button>
                 </div>
             </div>
+
 
             <!-- instructor forms -->
             
@@ -111,8 +113,6 @@
                     </form>
                 </div>
             
-
-
 
             <!-- Courses form -->
             
@@ -241,7 +241,7 @@
                             </div>
                         </div>
                         <div class="mt-5 col-md-12">
-                            <select class="custom-select" >
+                            <select name="grade" class="custom-select" >
                                 <option selected>Choose Grade...</option>
                                 <option value="1">First</option>
                                 <option value="2">Seconed</option>
@@ -252,7 +252,7 @@
                         <div class="mt-5 col-md-12">
                             <label class="control-label">Photos Of Student </label>
                             <div class="embed-responsive embed-responsive-4by3">
-                                <video class="embed-responsive-item" poster="img/camera1.png"></video>
+                                <video class="embed-responsive-item" poster="{% static 'img/camera1.png' %}"></video>
                             </div>
                             <button class="btn btn-info">Take Photos</button>
                         </div>
@@ -266,6 +266,62 @@
                         </div>
                     </form>
                 </div>
+
+            <!-- Grades form -->
+        
+                <!-- Delete form -->
+                <div class="col-md-6" v-show="checkSelected('7')">
+                    <p>Grade Delete</p>
+                    <form class="form-horizontal" action="" method="POST">
+                        <div class="mt-4 col-md-12">
+                            <div class="control-group">
+                                <label class="control-label" for="email">name</label>
+                                <div class="controls">
+                                    <input type="email" id="email" name="email" placeholder=""
+                                        class="form-control input-lg">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mt-4 col-md-12">
+                            <div class="control-group">
+                                <!-- Button -->
+                                <div class="controls">
+                                    <button class="btn btn-danger">Delete</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Add form -->
+                <div class="col-md-6" v-show="checkSelected('8')">
+                    <p>Grade Add</p>
+
+                    <form class="form-horizontal" action="{% url 'manage' %}" method="POST">
+                        {% csrf_token %}
+                        <div class="mt-5 col-md-12">
+                            <div class="control-group">
+                                <label class="control-label" for="gradeName">name</label>
+                                <div class="controls">
+                                    <input type="text" id="gradeName" name="gradeName" placeholder=""
+                                        class="form-control input-lg">
+                                </div>
+                            </div>
+
+                        </div>
+                        
+                        <div class="mt-5 col-md-12">
+                            <div class="control-group">
+                                <!-- Button -->
+                                <div class="controls">
+                                    <button type="submit" class="btn btn-success">Add Grade</button>
+                                </div>
+                            </div>
+                        </div>
+                        <input name="manageType" value="addGrade" type="hidden">
+                    </form>
+                </div>
+            
         </div>
     </div>
 </div>

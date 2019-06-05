@@ -1,6 +1,20 @@
 {% extends 'base.html' %}
 {% load static %}
 
+{% block cssstyle%}
+<style>
+    body {
+        padding-top: 140px;
+      }
+    #header {
+        background: rgba(6, 12, 34, 0.98);
+    }
+    #footer{
+    margin: 75px 0px 0px  0px;
+    }
+</style>
+{% endblock %}
+
 {% block content %}
 <div class="container">
     <div class="row">
