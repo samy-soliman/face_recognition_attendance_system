@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+
+{%  load static %}
+
+{% block cssstyle%}
+<style>
+    body {
+        padding-top: 140px;
+    }
+
+    #header {
+        background: rgba(6, 12, 34, 0.98);
+    }
+
+    #footer {
+        margin: 75px 0px 0px 0px;
+    }
+</style>
+{% endblock %}
+
+{% block content%}
+<div class="container">
+    <div class="row">
+
+        <div class="col-md-6">
+            <h1 class="mt-1 col-md-7" id="id1"><span>Steps</span></h1>
+            <h1 class="mt-1 col-md-8" id="id1">First choose course , </h1>
+            <h1 class="mt-1 col-md-8" id="id1">Seconed take photo of the class,</h1>
+            <h1 class="mt-1 col-md-8" id="id1">The attandance will be in "history" page.</h1>
+        </div>
+
+        <!-- Take Attendance form -->
+
+        <!-- Add form -->
+        <div class="col-md-6">
+            <p>Take Attendance</p>
+
+            <form class="form-horizontal" action="{% url 'attendance' %}" id="attendanceForm" method="POST">
+                {% csrf_token %}
+                <div class="mt-5 col-md-12">
+                    <select name="course" class="custom-select" >
+                        <option selected>Choose course...</option>
+                        {% if user.is_authenticated %}
+                            {% for course in courses %}
+                                <option value="{{ course.name }}">{{ course.name }}</option>
+                            {% endfor %}
+                        {% endif %}
+                    </select>
+                </div>
+                <div class="mt-5 col-md-12">
+                    <label class="control-label">Photo Of Students </label>
+                    <div class="embed-responsive embed-responsive-4by3">
+                        <video class="embed-responsive-item" poster="{% static 'img/camera1.png' %}"></video>
+                        <canvas id="canvas" width="400" height="300" style="display: none"></canvas>
+                    </div>
+                    <button type="button" onclick="sendPhoto()" class="btn btn-info">Take Photos</button>
+                    <button type="button" onclick="start()" class="btn btn-info">start</button>
+                    <button type="button" onclick="closeWebCam()" class="btn btn-info">close</button>
+                </div>
+                <div class="mt-5 col-md-12">
+                    <div class="control-group">
+                        <!-- Button -->
+                        <div class="controls">
+                            <button type="submit" class="btn btn-success">Take Attendance</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock%}
+
+{% block script%}
+
+  <!-- webcam js-->
+  <script src="{% static 'js/webcamTwo.js' %} "></script>
+{% endblock %}

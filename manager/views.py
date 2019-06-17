@@ -46,27 +46,34 @@ def manage(request):
                     return redirect('manage')
                 else :
                     companyEmbeddingsPath = company_user.embeddingsPath
-                    companyPhotosPath = company_user.photosPath
+                    companyStudentsPhotosPath = company_user.studentsPhotosPath
+                    companyLecturesPhotosPath = company_user.lecturesPhotosPath
 
                     gradeEmbeddingsPath = companyEmbeddingsPath + r'/' + grade_Name
-                    gradephotosPath = companyPhotosPath + r'/' + grade_Name
+                    gradeStudentsPhotosPath = companyStudentsPhotosPath + r'/' + grade_Name
+                    gradeLecturesPhotosPath = companyLecturesPhotosPath + r'/' + grade_Name
 
                     if  not (os.path.isdir( gradeEmbeddingsPath)):
                         os.mkdir( gradeEmbeddingsPath )
-                        if  not (os.path.isdir( gradephotosPath)):
-                            os.mkdir( gradephotosPath )
+                        if  not (os.path.isdir( gradeStudentsPhotosPath)):
+                            os.mkdir( gradeStudentsPhotosPath )
+                            if  not (os.path.isdir( gradeLecturesPhotosPath)):
+                                os.mkdir( gradeLecturesPhotosPath )
 
-                            initialknownEncodings = []
-                            initialknownNames = []
-                            initialEmbeddings = {"encodings": initialknownEncodings, "names": initialknownNames}
-                            gradeEmbeddingsPath = gradeEmbeddingsPath + r'/' + grade_Name + '.pickle'
-                            f = open(gradeEmbeddingsPath, "wb")
-                            f.write(pickle.dumps(initialEmbeddings))
-                            f.close()
+                                initialknownEncodings = []
+                                initialknownNames = []
+                                initialEmbeddings = {"encodings": initialknownEncodings, "names": initialknownNames}
+                                gradeEmbeddingsPath = gradeEmbeddingsPath + r'/' + grade_Name + '.pickle'
+                                f = open(gradeEmbeddingsPath, "wb")
+                                f.write(pickle.dumps(initialEmbeddings))
+                                f.close()
 
-                            grade = Grade(idfk_company = company_user, name = grade_Name, embeddingsPath = gradeEmbeddingsPath,photosPath=gradephotosPath)
-                            grade.save()
-                            return redirect('manage')
+                                grade = Grade(idfk_company = company_user, name = grade_Name,
+                                embeddingsPath = gradeEmbeddingsPath,studentsPhotosPath=gradeStudentsPhotosPath,
+                                lecturesPhotosPath=gradeLecturesPhotosPath)
+                                
+                                grade.save()
+                                return redirect('manage')
                     else:
                         return redirect('manage')
 
@@ -76,11 +83,13 @@ def manage(request):
                 dataUrlsJson = request.POST['dataUrls']
                 data_Urls = json.loads(dataUrlsJson)
 
-                if Student.objects.filter(idfk_company=company_user).filter(name=user_name).exists():
+                studentGrade = Grade.objects.filter(idfk_company=company_user).get(name=grade_name)
+
+                if Student.objects.filter(idfk_company=company_user).filter(idfk_grade=studentGrade).filter(name=user_name).exists():
                     return redirect('manage')
                 else :
-                    studentGrade = Grade.objects.filter(idfk_company=company_user).get(name=grade_name)
-                    studentPhotosPath = studentGrade.photosPath + r'/' + user_name
+                    
+                    studentPhotosPath = studentGrade.studentsPhotosPath + r'/' + user_name
                     if  not (os.path.isdir( studentPhotosPath)):
                         os.mkdir( studentPhotosPath )
 
@@ -104,13 +113,13 @@ def manage(request):
                 name = request.POST['name']
                 grade_name = request.POST['grade']
                 instructor_name = request.POST['instructor']
-                
-                if Course.objects.filter(idfk_company=company_user).filter(name=name).exists():
+                instructor = Instructor.objects.filter(idfk_company = company_user).get(name=instructor_name)
+
+                if Course.objects.filter(idfk_instructor__idfk_company=company_user).filter(name=name).exists():
                     return redirect('manage')
                 else :
                     grade = Grade.objects.filter(idfk_company = company_user).get(name=grade_name)
-                    instructor = Instructor.objects.filter(idfk_company = company_user).get(name=instructor_name)
-                    
+                                        
                     course = Course(idfk_instructor=instructor,name=name,idfk_grade=grade)
                     course.save()
 

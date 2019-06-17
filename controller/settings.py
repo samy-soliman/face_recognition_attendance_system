@@ -33,6 +33,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'attendance.apps.AttendanceConfig',
     'manager.apps.ManagerConfig',
     'accounts.apps.AccountsConfig',
     'pages.apps.PagesConfig',

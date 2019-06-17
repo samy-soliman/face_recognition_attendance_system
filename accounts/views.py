@@ -35,25 +35,36 @@ def register(request):
                 embeddingsPath = companiesRelatedFilesPath + r'/embeddings'
                 if not (os.path.isdir( embeddingsPath)):
                     os.mkdir( embeddingsPath )
-                # create the photos folder that will contain photos for each company
+                # create the students photos folder that will contain photos for each company
                 # it is created with the first company then it checks if exists to make it or not and it should be exits
-                photosPath = companiesRelatedFilesPath + r'/photos'
-                if not (os.path.isdir( photosPath)):
-                    os.mkdir( photosPath )
+                studentsPhotosPath = companiesRelatedFilesPath + r'/studentsPhotos'
+                if not (os.path.isdir( studentsPhotosPath)):
+                    os.mkdir( studentsPhotosPath )
+                # create the lectures photos folder that will contain photos for each company
+                # it is created with the first company then it checks if exists to make it or not and it should be exits
+                lecturesPhotosPath = companiesRelatedFilesPath + r'/lecturesPhotos'
+                if not (os.path.isdir( lecturesPhotosPath)):
+                    os.mkdir( lecturesPhotosPath )
                           
                 # create the company folder inside the embeddings , photos folder , it will have company name
                 # we check if the folders exist for safety
                 companyEmbeddingsPath = embeddingsPath + r'/' +company_name
-                companyPhotosPath = photosPath + r'/' +company_name
+                companyStudentsPhotosPath = studentsPhotosPath + r'/' +company_name
+                companyLecturesPhotosPath = lecturesPhotosPath + r'/' +company_name
                 if not (os.path.isdir(companyEmbeddingsPath)):
                     os.mkdir(companyEmbeddingsPath)
-                    if not (os.path.isdir(companyPhotosPath)):
-                        os.mkdir(companyPhotosPath)
+                    if not (os.path.isdir(companyStudentsPhotosPath)):
+                        os.mkdir(companyStudentsPhotosPath)
+                        if not (os.path.isdir(companyLecturesPhotosPath)):
+                            os.mkdir(companyLecturesPhotosPath)
 
-                        company = Company(user=user, name=company_name, email=email, phone=phone,embeddingsPath=companyEmbeddingsPath,photosPath=companyPhotosPath)
-                        company.save()
+                            company = Company(user=user, name=company_name, email=email, phone=phone,
+                            embeddingsPath=companyEmbeddingsPath,studentsPhotosPath=companyStudentsPhotosPath,
+                            lecturesPhotosPath=companyLecturesPhotosPath)
 
-                return redirect('login')
+                            company.save()
+
+                            return redirect('login')
     else:
         return render(request, 'accounts/register.html')
 

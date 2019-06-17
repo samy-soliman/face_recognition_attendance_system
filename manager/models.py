@@ -10,15 +10,16 @@ class Grade(models.Model):
     idfk_company = models.ForeignKey(Company, on_delete=models.CASCADE, db_index =False,related_name='grades')
     name = models.CharField(max_length=200)
     embeddingsPath = models.CharField(max_length=200)
-    photosPath = models.CharField(max_length=200)
+    studentsPhotosPath = models.CharField(max_length=200,default="")
+    lecturesPhotosPath = models.CharField(max_length=200,default="")
     def __str__(self):
         return self.name
 
 
 class Course(models.Model):
-    idfk_instructor = models.ForeignKey(Instructor, on_delete=models.CASCADE, db_index =False)
+    idfk_instructor = models.ForeignKey(Instructor, on_delete=models.CASCADE, db_index =False,related_name='courses')
     name = models.CharField(max_length=200)
-    idfk_grade = models.ForeignKey(Grade, on_delete=models.CASCADE, db_index =False)
+    idfk_grade = models.ForeignKey(Grade, on_delete=models.CASCADE, db_index =False,related_name='course')
     def __str__(self):
         return self.name
 
@@ -33,6 +34,8 @@ class Student(models.Model):
 class Lecture(models.Model):
     idfk_course = models.ForeignKey(Course, on_delete=models.CASCADE, db_index =False)
     createdAt = models.DateTimeField(auto_now_add=True)
+    lecturePhotoPath = models.CharField(max_length=200,default="")
+
 
 class Attendance(models.Model):
     class Meta:

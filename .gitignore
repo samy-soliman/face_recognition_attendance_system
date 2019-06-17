@@ -3,7 +3,7 @@
 # Edit at https://www.gitignore.io/?templates=django
 
 ### project specific ###
-companiesRelatedFiles/photos/
+companiesRelatedFiles/
 ### Django ###
 *.log
 *.pot

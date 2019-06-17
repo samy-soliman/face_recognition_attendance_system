@@ -12,7 +12,8 @@ class Company(models.Model):
   email = models.CharField(max_length=200)
   phone = models.CharField(max_length=100)
   embeddingsPath = models.CharField(max_length=200,default="")
-  photosPath = models.CharField(max_length=200,default="")
+  studentsPhotosPath = models.CharField(max_length=200,default="")
+  lecturesPhotosPath = models.CharField(max_length=200,default="")
   def __str__(self):
     return self.name
 
