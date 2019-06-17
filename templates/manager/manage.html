@@ -147,34 +147,37 @@
                 <div class="col-md-6" v-show="checkSelected('4')">
                     <p>Courses Add</p>
 
-                    <form class="form-horizontal" action="" method="POST">
+                    <form class="form-horizontal" action="{% url 'manage' %}" method="POST">
+                        {% csrf_token %}
                         <div class="mt-5 col-md-12">
                             <div class="control-group">
-                                <label class="control-label" for="username">Code</label>
+                                <label class="control-label" for="name">name</label>
                                 <div class="controls">
-                                    <input type="text" id="username" name="username" placeholder=""
+                                    <input type="text" id="name" name="name" placeholder=""
                                         class="form-control input-lg">
                                 </div>
                             </div>
 
                         </div>
                         <div class="mt-5 col-md-12">
-                                <select class="custom-select" >
-                                    <option selected>Choose Grade...</option>
-                                    <option value="1">First</option>
-                                    <option value="2">Seconed</option>
-                                    <option value="3">Third</option>
-                                    <option value="3">Fourth</option>
-                                </select>
+                            <select name="grade" class="custom-select" >
+                                <option selected>Choose Grade...</option>
+                                {% if user.is_authenticated %}
+                                    {% for grade in companyGrades %}
+                                        <option value="{{ grade.name }}">{{ grade.name }}</option>
+                                    {% endfor %}
+                                {% endif %}
+                            </select>
                         </div>
                         <div class="mt-5 col-md-12">
-                                    <select class="custom-select" >
-                                        <option selected>Choose Instructor...</option>
-                                        <option value="1">sami</option>
-                                        <option value="2">saed</option>
-                                        <option value="3">sameh</option>
-                                        <option value="3">abo zaed</option>
-                                    </select>
+                            <select name="instructor" class="custom-select" >
+                                <option selected>Choose instructor...</option>
+                                {% if user.is_authenticated %}
+                                    {% for instructor in comapnyInstructors %}
+                                        <option value="{{ instructor.name }}">{{ instructor.name }}</option>
+                                    {% endfor %}
+                                {% endif %}
+                            </select>
                         </div>
                         <div class="mt-4 col-md-12">
                             <div class="control-group">
@@ -184,6 +187,8 @@
                                 </div>
                             </div>
                         </div>
+                        <input name="manageType" value="addCourse" type="hidden">
+
                     </form>
 
 
@@ -220,7 +225,8 @@
                 <div class="col-md-6" v-show="checkSelected('6')">
                     <p>Student Add</p>
 
-                    <form class="form-horizontal" action="" method="POST">
+                    <form class="form-horizontal" action="{% url 'manage' %}" id="studentAddForm" method="POST">
+                        {% csrf_token %}
                         <div class="mt-5 col-md-12">
                             <div class="control-group">
                                 <label class="control-label" for="username">Username</label>
@@ -231,39 +237,36 @@
                             </div>
 
                         </div>
-                        <div class="mt-4 col-md-12">
-                            <div class="control-group">
-                                <label class="control-label" for="email">E-mail</label>
-                                <div class="controls">
-                                    <input type="email" id="email" name="email" placeholder=""
-                                        class="form-control input-lg">
-                                </div>
-                            </div>
-                        </div>
+
                         <div class="mt-5 col-md-12">
                             <select name="grade" class="custom-select" >
                                 <option selected>Choose Grade...</option>
-                                <option value="1">First</option>
-                                <option value="2">Seconed</option>
-                                <option value="3">Third</option>
-                                <option value="3">Fourth</option>
+                                {% if user.is_authenticated %}
+                                    {% for grade in companyGrades %}
+                                        <option value="{{ grade.name }}">{{ grade.name }}</option>
+                                    {% endfor %}
+                                {% endif %}
                             </select>
-                        </div>
+                        </div> 
                         <div class="mt-5 col-md-12">
                             <label class="control-label">Photos Of Student </label>
                             <div class="embed-responsive embed-responsive-4by3">
                                 <video class="embed-responsive-item" poster="{% static 'img/camera1.png' %}"></video>
+                                <canvas id="canvas" width="400" height="300" style="display: none"></canvas>
                             </div>
-                            <button class="btn btn-info">Take Photos</button>
+                            <button type="button" onclick="startImageHandler()" class="btn btn-info">Take Photos</button>
+                            <button type="button" onclick="start()" class="btn btn-info">start</button>
+                            <button type="button" onclick="closeWebCam()" class="btn btn-info">close</button>
                         </div>
                         <div class="mt-5 col-md-12">
                             <div class="control-group">
                                 <!-- Button -->
                                 <div class="controls">
-                                    <button class="btn btn-success">Add Student</button>
+                                    <button type="submit" class="btn btn-success">Add Student</button>
                                 </div>
                             </div>
                         </div>
+                        <input name="manageType" value="addStudent" type="hidden">
                     </form>
                 </div>
 
@@ -335,4 +338,6 @@
   <!-- manageVue script -->
   <script src="{% static 'js/manageVue.js' %}"></script>
 
+  <!-- webcam js-->
+  <script src="{% static 'js/webcam.js' %} "></script>
 {% endblock %}

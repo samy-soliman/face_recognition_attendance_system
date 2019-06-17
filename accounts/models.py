@@ -11,13 +11,14 @@ class Company(models.Model):
   name = models.CharField(max_length=200)
   email = models.CharField(max_length=200)
   phone = models.CharField(max_length=100)
-  pathToEmpeddings = models.CharField(max_length=200,default="")
+  embeddingsPath = models.CharField(max_length=200,default="")
+  photosPath = models.CharField(max_length=200,default="")
   def __str__(self):
     return self.name
 
 class Instructor(models.Model):
   user = models.OneToOneField(settings.AUTH_USER_MODEL,on_delete=models.CASCADE,primary_key=True, related_name='instructor')
-  idfk_Company = models.ForeignKey(Company, on_delete=models.CASCADE, db_index = False)
+  idfk_company = models.ForeignKey(Company, on_delete=models.CASCADE, db_index = False,related_name='instructors')
   name = models.CharField(max_length=200)
   email = models.CharField(max_length=200)
   def __str__(self):

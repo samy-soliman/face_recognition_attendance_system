@@ -26,19 +26,32 @@ def register(request):
                 user = User.objects.create_user(username=company_name, password=password,email=email)
                 user.save()
 
+                # create companiesRelatedFiles which will containg embeddings folder and photos
+                companiesRelatedFilesPath = os.getcwd() + r'/companiesRelatedFiles'
+                if not (os.path.isdir( companiesRelatedFilesPath)):
+                    os.mkdir( companiesRelatedFilesPath )
                 # create the embeddings folder that will contain embeddings for each company
                 # it is created with the first company then it checks if exists to make it or not and it should be exits
-                basePathToEmbeddings = os.getcwd() + r'/embeddings'
-                if not (os.path.isdir( basePathToEmbeddings)):
-                    os.mkdir( basePathToEmbeddings )     
-                # create the company folder inside the embeddings folder , it will have company name
-                # we check if it exist for safety
-                companyToPathEmbeddings = basePathToEmbeddings + r'/' +company_name
-                if not (os.path.isdir(companyToPathEmbeddings)):
-                    os.mkdir(companyToPathEmbeddings)
+                embeddingsPath = companiesRelatedFilesPath + r'/embeddings'
+                if not (os.path.isdir( embeddingsPath)):
+                    os.mkdir( embeddingsPath )
+                # create the photos folder that will contain photos for each company
+                # it is created with the first company then it checks if exists to make it or not and it should be exits
+                photosPath = companiesRelatedFilesPath + r'/photos'
+                if not (os.path.isdir( photosPath)):
+                    os.mkdir( photosPath )
+                          
+                # create the company folder inside the embeddings , photos folder , it will have company name
+                # we check if the folders exist for safety
+                companyEmbeddingsPath = embeddingsPath + r'/' +company_name
+                companyPhotosPath = photosPath + r'/' +company_name
+                if not (os.path.isdir(companyEmbeddingsPath)):
+                    os.mkdir(companyEmbeddingsPath)
+                    if not (os.path.isdir(companyPhotosPath)):
+                        os.mkdir(companyPhotosPath)
 
-                    company = Company(user=user, name=company_name, email=email, phone=phone,pathToEmpeddings=companyToPathEmbeddings)
-                    company.save()
+                        company = Company(user=user, name=company_name, email=email, phone=phone,embeddingsPath=companyEmbeddingsPath,photosPath=companyPhotosPath)
+                        company.save()
 
                 return redirect('login')
     else:
