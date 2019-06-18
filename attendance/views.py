@@ -9,6 +9,7 @@ import re
 from binascii import a2b_base64
 from datetime import date
 from .faceRecognition.detect_faces import detectFaces
+import datetime
 
 # Create your views here.
 
@@ -34,16 +35,18 @@ def attendance(request):
             output.write(binary)
             output.close()
 
-            lecture = Lecture(idfk_course=course, lecturePhotoPath=lecturePhotoPath)
+            now = datetime.datetime.now()
+            lectureName = course_name + str(now.year)+ '-' + str(now.month) + '-' +str(now.day) + '-' + str(now.hour) 
+            lecture = Lecture(name=lectureName,idfk_course=course, lecturePhotoPath=lecturePhotoPath)
             lecture.save()
 
             # starting recognition
 
             attendantStudentsList = detectFaces(lecturePhotoPath+'.png', gradeEmbeddingsPath)
             attendantStudentsNames = set(attendantStudentsList)
-            allStudentsNames = Student.objects.filter(idfk_grade =courseGrade )
+            allStudents = Student.objects.filter(idfk_grade =courseGrade )
     
-            for student in allStudentsNames:
+            for student in allStudents:
                 if(student.name in attendantStudentsNames):
                     attendance = Attendance(idfk_lecture=lecture,idfk_student=student,state= True)
                     attendance.save()

@@ -20,7 +20,7 @@
           <li><a href="{% url 'manage' %}">Manage</a></li>
           
           <li><a href="{% url 'attendance' %}">Take Attendance</a></li>
-          <li><a href="{% url 'index' %}">History</a></li>
+          <li><a href="{% url 'history' %}">History</a></li>
             {% if user.is_authenticated %}
 
               <li><a href="">Welcome {{ user.username }}</a></li>

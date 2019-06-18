@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+
+{%  load static %}
+
+{% block cssstyle%}
+<style>
+    body {
+        padding-top: 140px;
+    }
+
+    #header {
+        background: rgba(6, 12, 34, 0.98);
+    }
+
+    #footer {
+        margin: 75px 0px 0px 0px;
+    }
+</style>
+{% endblock %}
+
+{% block content%}
+<div class="container">
+    <div class="row">
+
+        <!-- History of Attenndance -->
+        <div class="col-md-6">
+            <h1 class="mt-1 col-md-12" id="id1">History of Attenndance</h1>
+
+            <form class="form-horizontal" action="{% url 'history' %}" method="POST">
+                {% csrf_token %}
+                <div class="mt-5 col-md-12">
+                    <select name="lecture" class="custom-select" >
+                        <option selected>Choose lecture...</option>
+                        {% if user.is_authenticated %}
+                            {% for lecture in lectures %}
+                                <option value="{{ lecture.name }}">{{ lecture.name }}</option>
+                            {% endfor %}
+                        {% endif %}
+                    </select>
+                </div>
+
+                <div class="mt-5 col-md-12">
+                    <div class="control-group">
+                        <!-- Button -->
+                        <div class="controls">
+                            <button type="submit" class="btn btn-success">View Attendance Sheet</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

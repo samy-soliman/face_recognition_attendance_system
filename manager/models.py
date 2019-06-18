@@ -32,6 +32,7 @@ class Student(models.Model):
         return self.name
 
 class Lecture(models.Model):
+    name = models.CharField(max_length=200,default="")
     idfk_course = models.ForeignKey(Course, on_delete=models.CASCADE, db_index =False)
     createdAt = models.DateTimeField(auto_now_add=True)
     lecturePhotoPath = models.CharField(max_length=200,default="")

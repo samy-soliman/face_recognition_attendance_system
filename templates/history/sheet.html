@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+
+{%  load static %}
+
+{% block cssstyle%}
+<style>
+    body {
+        padding-top: 140px;
+    }
+
+    #header {
+        background: rgba(6, 12, 34, 0.98);
+    }
+
+    #footer {
+        margin: 75px 0px 0px 0px;
+    }
+</style>
+{% endblock %}
+
+{% block content%}
+<div class="container">
+    <div class="row">
+
+        <!-- History of Attenndance -->
+        <div class="col-md-12">
+            <h1 class="mt-1 col-md-12" id="id1">Attendance for <psam style="color: crimson">{{lectureName}}</psam>
+            </h1>
+            <table class="table">
+            <thead class="thead-light">
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Student Name</th>
+                    <th scope="col">Attendance</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                    {% for attendance in allStudentsAttendance %}
+                        {% if attendance.state == True%}
+                            <tr class="table-success">
+                        {% else %}
+                            <tr class="table-danger">
+                        {% endif %}
+                                <th scope="row">{{ forloop.counter }}</th>
+                                <td>{{ attendance.idfk_student.name}}</td>
+                                <td>{{ attendance.state }}</td>
+                        </tr>
+                    {% endfor %}
+                
+            </tbody>
+            </table>
+
+        </div>
+    </div>
+</div>
+{% endblock %}
