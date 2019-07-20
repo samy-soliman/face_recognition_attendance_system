@@ -51,5 +51,9 @@ function sendPhoto(){
     
     closeWebCam();
 
-    window.alert('photo has been taken')
+    $(document).ready( function(){
+      $("#messageDiv1").html('Done').show('fast');
+      $("#messageDiv1").delay(1500).fadeOut('fast');
+
+    });
 }

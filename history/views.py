@@ -13,6 +13,10 @@ from datetime import date
 
 def history(request):
     if request.user.is_authenticated:
+        try:
+            instructor_user = request.user.instructor
+        except:
+            return render(request, 'error/error.html')
         instructor_user = request.user.instructor
         company_user = instructor_user.idfk_company
         
@@ -39,5 +43,5 @@ def history(request):
             return render(request, 'history/history.html',context)
     
     else:
-        return HttpResponse('<h1>You need to log in as instructor !</h1>')
+        return render(request, 'error/error.html')
     

@@ -9,6 +9,8 @@ import pickle
 import cv2
 import os
 
+# path of student photos
+# path to save the embeddings to 
 
 def encodeFaces(datasetPath,encodingsPath):
 

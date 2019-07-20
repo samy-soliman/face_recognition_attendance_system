@@ -13,7 +13,10 @@
     margin: 75px 0px 0px  0px;
     }
 </style>
+<script src="{% static 'js/manageSignup.js' %} "></script>
 {% endblock %}
+
+
 
 {% block content %}
 <div class="container">
@@ -32,7 +35,7 @@
                     <div class="control-group">
                         <label class="control-label" for="username">company name</label>
                         <div class="controls">
-                            <input type="text" id="username" name="company_name" placeholder=""
+                            <input type="text" id="companyName" name="company_name"
                                 class="form-control input-lg">
                         </div>
                     </div>
@@ -42,7 +45,7 @@
                     <div class="control-group">
                         <label class="control-label" for="email">E-mail</label>
                         <div class="controls">
-                            <input type="email" id="email" name="email" placeholder=""
+                            <input type="email" id="companyEmail" name="email"
                                 class="form-control input-lg">
                         </div>
                     </div>
@@ -52,16 +55,16 @@
                     <div class="control-group">
                         <label class="control-label" for="password">Password</label>
                         <div class="controls">
-                            <input type="password" id="password" name="password" placeholder=""
+                            <input type="password" id="companyPassword" name="password"
                                 class="form-control input-lg">
                         </div>
                     </div>
                 </div>
                 <div class="mt-4 col-md-12">
                     <div class="control-group">
-                        <label class="control-label" for="password_confirm">phone</label>
+                        <label class="control-label" for="phone">phone</label>
                         <div class="controls">
-                            <input type="password" id="password_confirm" name="phone" placeholder=""
+                            <input id="companyPhone" name="phone"
                                 class="form-control input-lg">
                         </div>
                     </div>
@@ -70,7 +73,10 @@
                     <div class="control-group">
                         <!-- Button -->
                         <div class="controls">
-                            <button  type="submit" class="btn btn-success">Register</button>
+                            <button  onclick="addCompany()" type="button" class="btn btn-success">Register</button>
+                            <span class="alert alert-success" role="alert" id='messageDiv1' style="display: none;
+                                    z-index:1001;text-align: center; padding: 15px 40px; font-size: large;">
+                            </span>
                         </div>
                     </div>
                 </div>
@@ -80,3 +86,4 @@
     </div>
 </div>
 {% endblock %}
+

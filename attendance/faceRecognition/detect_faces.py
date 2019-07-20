@@ -5,6 +5,8 @@ import os
 import face_recognition
 import pickle
 
+# path of the lecture photo
+# path of the grade embeddings 
 
 def detectFaces(imagePath, gradeEmbeddingsPath):
 

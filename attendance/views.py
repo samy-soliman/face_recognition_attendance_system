@@ -15,6 +15,10 @@ import datetime
 
 def attendance(request):
     if request.user.is_authenticated:
+        try:
+            instructor_user = request.user.instructor
+        except:
+            return render(request, 'error/error.html')
         instructor_user = request.user.instructor
         company_user = instructor_user.idfk_company
 
@@ -36,7 +40,7 @@ def attendance(request):
             output.close()
 
             now = datetime.datetime.now()
-            lectureName = course_name + str(now.year)+ '-' + str(now.month) + '-' +str(now.day) + '-' + str(now.hour) 
+            lectureName = course_name + str(now.year)+ '-' + str(now.month) + '-' +str(now.day) + '-' + str(now.hour) + '-' + str(now.minute) + '-' + str(now.second) 
             lecture = Lecture(name=lectureName,idfk_course=course, lecturePhotoPath=lecturePhotoPath)
             lecture.save()
 

@@ -6,17 +6,48 @@
 <style>
     body {
         padding-top: 140px;
-      }
+    }
+
     #header {
         background: rgba(6, 12, 34, 0.98);
     }
-    #footer{
-    margin: 75px 0px 0px  0px;
+
+    #footer {
+        margin: 75px 0px 0px 0px;
     }
 </style>
+<link href="{% static 'css/loading.css' %}" rel="stylesheet">
+
+<!-- manage js-->
+<script src="{% static 'js/manage.js' %} "></script>
 {% endblock %}
 
 {% block content %}
+
+<!-- <div id="loadingdiv"
+    style="position:absolute;top:0;left:0;width:100%;height:100%;z-index:1000;opacity: .9;display:none;">
+    <img id='waitgif' style="z-index:1000;position:absolute;left:50%;top:50%;margin-left:-100px;margin-top: -100px;"
+        src="{% static 'img/gif1.gif' %}">
+</div> -->
+
+<div id="loadingdiv" style="position:absolute;top:0;left:0;width:100%;height:100%;z-index:1000;
+                            opacity: .9;display:none;">
+<div class="sk-fading-circle" style="position:absolute;left:50%;top:50%;margin-left:-100px;margin-top: -50px;">
+    <div class="sk-circle1 sk-circle"></div>
+    <div class="sk-circle2 sk-circle"></div>
+    <div class="sk-circle3 sk-circle"></div>
+    <div class="sk-circle4 sk-circle"></div>
+    <div class="sk-circle5 sk-circle"></div>
+    <div class="sk-circle6 sk-circle"></div>
+    <div class="sk-circle7 sk-circle"></div>
+    <div class="sk-circle8 sk-circle"></div>
+    <div class="sk-circle9 sk-circle"></div>
+    <div class="sk-circle10 sk-circle"></div>
+    <div class="sk-circle11 sk-circle"></div>
+    <div class="sk-circle12 sk-circle"></div>
+</div>
+</div>
+
 
 <div id="vue-app">
     <div class="container">
@@ -29,7 +60,7 @@
                 <button class="btn btn-info" v-on:click="changeSelectedEntity('Instructor')">Instructor</button>
                 <button class="btn btn-info" v-on:click="changeSelectedEntity('Courses')">Courses</button>
                 <button class="btn btn-info" v-on:click="changeSelectedEntity('Grades')">Grades</button>
-                
+
                 <div class="mt-5" v-show="selectedEntity !='' ">
                     <h1 class="mt-1 col-md-8" id="id1">What action you want to do</h1>
                     <button class="btn btn-info" v-on:click="changeSelectedAction('Add')">Add</button>
@@ -39,292 +70,310 @@
 
 
             <!-- instructor forms -->
-            
-                <!-- Delete form -->
-                <div class="col-md-6" v-show="checkSelected('1')">
-                    <p>instructor Delete</p>
-                    <form class="form-horizontal" action="" method="POST">
 
-                        <div class="mt-4 col-md-12">
-                            <div class="control-group">
-                                <label class="control-label" for="email">E-mail</label>
-                                <div class="controls">
-                                    <input type="email" id="email" name="email" placeholder=""
-                                        class="form-control input-lg">
-                                </div>
+            <!-- Delete form -->
+            <div class="col-md-6" v-show="checkSelected('1')">
+                <p>instructor Delete</p>
+                <form class="form-horizontal" action="" method="POST">
+
+                    <div class="mt-4 col-md-12">
+                        <div class="control-group">
+                            <label class="control-label" for="email">E-mail</label>
+                            <div class="controls">
+                                <input type="email" id="email" name="email" placeholder=""
+                                    class="form-control input-lg">
                             </div>
                         </div>
-                        <div class="mt-4 col-md-12">
-                            <div class="control-group">
-                                <!-- Button -->
-                                <div class="controls">
-                                    <button class="btn btn-danger">Delete</button>
-                                </div>
+                    </div>
+                    <div class="mt-4 col-md-12">
+                        <div class="control-group">
+                            <!-- Button -->
+                            <div class="controls">
+                                <button class="btn btn-danger">Delete</button>
                             </div>
                         </div>
-                    </form>
-                </div>
+                    </div>
+                </form>
+            </div>
 
-                <!-- Add form -->
-                <div class="col-md-6" v-show="checkSelected('2')">
-                    <p>Instructor Add</p>
+            <!-- Add form -->
+            <div class="col-md-6" v-show="checkSelected('2')">
+                <p>Instructor Add</p>
 
-                    <form class="form-horizontal" action="{% url 'manage' %}" method="POST">
-                        {% csrf_token %}
-                        <div class="mt-5 col-md-12">
-                            <div class="control-group">
-                                <label class="control-label" for="username">Username</label>
-                                <div class="controls">
-                                    <input type="text" id="username" name="username" placeholder=""
-                                        class="form-control input-lg">
-                                </div>
-                            </div>
-
-                        </div>
-                        <div class="mt-4 col-md-12">
-                            <div class="control-group">
-                                <label class="control-label" for="email">E-mail</label>
-                                <div class="controls">
-                                    <input type="email" id="email" name="email" placeholder=""
-                                        class="form-control input-lg">
-                                </div>
+                <form class="form-horizontal" action="{% url 'manage' %}" method="POST">
+                    {% csrf_token %}
+                    <div class="mt-5 col-md-12">
+                        <div class="control-group">
+                            <label class="control-label" for="username">Username</label>
+                            <div class="controls">
+                                <input type="text" id="instructorName" name="username" placeholder=""
+                                    class="form-control input-lg">
                             </div>
                         </div>
 
-                        <div class="mt-4 col-md-12">
-                            <div class="control-group">
-                                <label class="control-label" for="password">Password</label>
-                                <div class="controls">
-                                    <input type="password" id="password" name="password" placeholder=""
-                                        class="form-control input-lg">
-                                </div>
+                    </div>
+                    <div class="mt-4 col-md-12">
+                        <div class="control-group">
+                            <label class="control-label" for="email">E-mail</label>
+                            <div class="controls">
+                                <input type="email" id="instructorEmail" name="email" placeholder=""
+                                    class="form-control input-lg">
                             </div>
                         </div>
-                       
-                        <div class="mt-4 col-md-12">
-                            <div class="control-group">
-                                <!-- Button -->
-                                <div class="controls">
-                                    <button type="submit" class="btn btn-success">Add</button>
-                                </div>
+                    </div>
+
+                    <div class="mt-4 col-md-12">
+                        <div class="control-group">
+                            <label class="control-label" for="password">Password</label>
+                            <div class="controls">
+                                <input type="password" id="instructorPassword" name="password" placeholder=""
+                                    class="form-control input-lg">
                             </div>
                         </div>
-                        <input name="manageType" value="addInstructor" type="hidden">
-                    </form>
-                </div>
-            
+                    </div>
+
+                    <div class="mt-4 col-md-12">
+                        <div class="control-group">
+                            <!-- Button -->
+                            <div class="controls">
+                                    <button onclick="addInstructor()" type="button" class="btn btn-success">Add</button>
+                                    <span class="alert alert-success" role="alert" id='messageDiv3' style="display: none;
+                                    z-index:1001;text-align: center; padding: 15px 40px; font-size: large;">
+                                    </span>
+                            </div>
+                        </div>
+                    </div>
+                    <input id="addInstructorManage" name="manageType" value="addInstructor" type="hidden">
+                </form>
+            </div>
+
 
             <!-- Courses form -->
-            
-                <!-- Delete form -->
-                <div class="col-md-6" v-show="checkSelected('3')">
-                    <p>Courses Delete</p>
-                    <form class="form-horizontal" action="" method="POST">
-                        <div class="mt-5 col-md-12">
-                            <div class="control-group">
-                                <label class="control-label" for="username">Code</label>
-                                <div class="controls">
-                                    <input type="text" id="username" name="username" placeholder=""
-                                        class="form-control input-lg">
-                                </div>
+
+            <!-- Delete form -->
+            <div class="col-md-6" v-show="checkSelected('3')">
+                <p>Courses Delete</p>
+                <form class="form-horizontal" action="" method="POST">
+                    <div class="mt-5 col-md-12">
+                        <div class="control-group">
+                            <label class="control-label" for="username">Code</label>
+                            <div class="controls">
+                                <input type="text" id="username" name="username" placeholder=""
+                                    class="form-control input-lg">
                             </div>
                         </div>
-                       
-                        <div class="mt-4 col-md-12">
-                            <div class="control-group">
-                                <!-- Button -->
-                                <div class="controls">
-                                    <button class="btn btn-danger">Delete</button>
-                                </div>
+                    </div>
+
+                    <div class="mt-4 col-md-12">
+                        <div class="control-group">
+                            <!-- Button -->
+                            <div class="controls">
+                                <button class="btn btn-danger">Delete</button>
                             </div>
                         </div>
-                    </form>
+                    </div>
+                </form>
 
 
-                </div>
+            </div>
 
-                <!-- Add form -->
-                <div class="col-md-6" v-show="checkSelected('4')">
-                    <p>Courses Add</p>
+            <!-- Add form -->
+            <div class="col-md-6" v-show="checkSelected('4')">
+                <p>Courses Add</p>
 
-                    <form class="form-horizontal" action="{% url 'manage' %}" method="POST">
-                        {% csrf_token %}
-                        <div class="mt-5 col-md-12">
-                            <div class="control-group">
-                                <label class="control-label" for="name">name</label>
-                                <div class="controls">
-                                    <input type="text" id="name" name="name" placeholder=""
-                                        class="form-control input-lg">
-                                </div>
-                            </div>
-
-                        </div>
-                        <div class="mt-5 col-md-12">
-                            <select name="grade" class="custom-select" >
-                                <option selected>Choose Grade...</option>
-                                {% if user.is_authenticated %}
-                                    {% for grade in companyGrades %}
-                                        <option value="{{ grade.name }}">{{ grade.name }}</option>
-                                    {% endfor %}
-                                {% endif %}
-                            </select>
-                        </div>
-                        <div class="mt-5 col-md-12">
-                            <select name="instructor" class="custom-select" >
-                                <option selected>Choose instructor...</option>
-                                {% if user.is_authenticated %}
-                                    {% for instructor in comapnyInstructors %}
-                                        <option value="{{ instructor.name }}">{{ instructor.name }}</option>
-                                    {% endfor %}
-                                {% endif %}
-                            </select>
-                        </div>
-                        <div class="mt-4 col-md-12">
-                            <div class="control-group">
-                                <!-- Button -->
-                                <div class="controls">
-                                    <button class="btn btn-success">Add</button>
-                                </div>
+                <form class="form-horizontal" action="{% url 'manage' %}" method="POST">
+                    {% csrf_token %}
+                    <div class="mt-5 col-md-12">
+                        <div class="control-group">
+                            <label class="control-label" for="name">name</label>
+                            <div class="controls">
+                                <input type="text" id="courseName" name="name" placeholder="" class="form-control input-lg">
                             </div>
                         </div>
-                        <input name="manageType" value="addCourse" type="hidden">
 
-                    </form>
+                    </div>
+                    <div class="mt-5 col-md-12">
+                        <select id="selectedGrade" name="grade" class="custom-select">
+                            <option selected>Choose Grade...</option>
+                            {% if user.is_authenticated %}
+                            {% for grade in companyGrades %}
+                            <option value="{{ grade.name }}">{{ grade.name }}</option>
+                            {% endfor %}
+                            {% endif %}
+                        </select>
+                    </div>
+                    <div class="mt-5 col-md-12">
+                        <select id="selectedInstructor" name="instructor" class="custom-select">
+                            <option selected>Choose instructor...</option>
+                            {% if user.is_authenticated %}
+                            {% for instructor in comapnyInstructors %}
+                            <option value="{{ instructor.name }}">{{ instructor.name }}</option>
+                            {% endfor %}
+                            {% endif %}
+                        </select>
+                    </div>
+                    <div class="mt-4 col-md-12">
+                        <div class="control-group">
+                            <!-- Button -->
+                            <div class="controls">
+                                <button onclick="addCourse()" type="button" class="btn btn-success">Add</button>
+                                <span class="alert alert-success" role="alert" id='messageDiv2' style="display: none;
+                                z-index:1001;text-align: center; padding: 15px 40px; font-size: large;">
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <input id='addCourseManage' name="manageType" value="addCourse" type="hidden">
+
+                </form>
 
 
-                </div>
-            
+            </div>
+
 
             <!-- Students form -->
-        
-                <!-- Delete form -->
-                <div class="col-md-6" v-show="checkSelected('5')">
-                    <p>Student Delete</p>
-                    <form class="form-horizontal" action="" method="POST">
-                        <div class="mt-4 col-md-12">
-                            <div class="control-group">
-                                <label class="control-label" for="email">E-mail</label>
-                                <div class="controls">
-                                    <input type="email" id="email" name="email" placeholder=""
-                                        class="form-control input-lg">
-                                </div>
+
+            <!-- Delete form -->
+            <div class="col-md-6" v-show="checkSelected('5')">
+                <p>Student Delete</p>
+                <form class="form-horizontal" action="" method="POST">
+                    <div class="mt-4 col-md-12">
+                        <div class="control-group">
+                            <label class="control-label" for="email">E-mail</label>
+                            <div class="controls">
+                                <input type="email" id="email" name="email" placeholder=""
+                                    class="form-control input-lg">
                             </div>
                         </div>
-                        <div class="mt-4 col-md-12">
-                            <div class="control-group">
-                                <!-- Button -->
-                                <div class="controls">
-                                    <button class="btn btn-danger">Delete</button>
-                                </div>
+                    </div>
+                    <div class="mt-4 col-md-12">
+                        <div class="control-group">
+                            <!-- Button -->
+                            <div class="controls">
+                                <button class="btn btn-danger">Delete</button>
                             </div>
                         </div>
-                    </form>
-                </div>
+                    </div>
+                </form>
+            </div>
 
-                <!-- Add form -->
-                <div class="col-md-6" v-show="checkSelected('6')">
-                    <p>Student Add</p>
+            <!-- Add form -->
+            <div class="col-md-6" v-show="checkSelected('6')">
+                <p>Student Add</p>
 
-                    <form class="form-horizontal" action="{% url 'manage' %}" id="studentAddForm" method="POST">
-                        {% csrf_token %}
-                        <div class="mt-5 col-md-12">
-                            <div class="control-group">
-                                <label class="control-label" for="username">Username</label>
-                                <div class="controls">
-                                    <input type="text" id="username" name="username" placeholder=""
-                                        class="form-control input-lg">
-                                </div>
+                <form class="form-horizontal" action="{% url 'manage' %}" id="studentAddForm" method="POST">
+                    {% csrf_token %}
+                    <div class="mt-5 col-md-12">
+                        <div class="control-group">
+                            <label class="control-label" for="username">Username</label>
+                            <div class="controls">
+                                <input type="text" id="studentName" name="username" placeholder=""
+                                    class="form-control input-lg">
                             </div>
-
                         </div>
 
-                        <div class="mt-5 col-md-12">
-                            <select name="grade" class="custom-select" >
-                                <option selected>Choose Grade...</option>
-                                {% if user.is_authenticated %}
-                                    {% for grade in companyGrades %}
-                                        <option value="{{ grade.name }}">{{ grade.name }}</option>
-                                    {% endfor %}
-                                {% endif %}
-                            </select>
-                        </div> 
-                        <div class="mt-5 col-md-12">
-                            <label class="control-label">Photos Of Student </label>
-                            <div class="embed-responsive embed-responsive-4by3">
-                                <video class="embed-responsive-item" poster="{% static 'img/camera1.png' %}"></video>
-                                <canvas id="canvas" width="400" height="300" style="display: none"></canvas>
-                            </div>
-                            <button type="button" onclick="startImageHandler()" class="btn btn-info">Take Photos</button>
-                            <button type="button" onclick="start()" class="btn btn-info">start</button>
-                            <button type="button" onclick="closeWebCam()" class="btn btn-info">close</button>
+                    </div>
+
+                    <div class="mt-5 col-md-12">
+                        <select id="studentGrade" name="grade" class="custom-select">
+                            <option selected>Choose Grade...</option>
+                            {% if user.is_authenticated %}
+                            {% for grade in companyGrades %}
+                            <option value="{{ grade.name }}">{{ grade.name }}</option>
+                            {% endfor %}
+                            {% endif %}
+                        </select>
+                    </div>
+                    <div class="mt-5 col-md-12">
+                        <label class="control-label">Photos Of Student </label>
+                        <div class="embed-responsive embed-responsive-4by3">
+                            <video class="embed-responsive-item" poster="{% static 'img/camera1.png' %}"></video>
+                            <canvas id="canvas" width="400" height="300" style="display: none"></canvas>
                         </div>
-                        <div class="mt-5 col-md-12">
-                            <div class="control-group">
-                                <!-- Button -->
-                                <div class="controls">
-                                    <button type="submit" class="btn btn-success">Add Student</button>
-                                </div>
+                        <button type="button" onclick="startImageHandler()" class="btn btn-info">Take Photos</button>
+                        <button type="button" onclick="start()" class="btn btn-info">start</button>
+                        <button type="button" onclick="closeWebCam()" class="btn btn-info">close</button>
+                        <span class="alert alert-danger" role="alert" id='messageDiv5' style="display: none;
+                                    text-align: center; padding: 5px 15px 8px; font-size: large;">
+                                    </span>
+                        <input id="studentPhotos" name="dataUrls" type="hidden">
+                    </div>
+                    <div class="mt-5 col-md-12">
+                        <div class="control-group">
+                            <!-- Button -->
+                            <div class="controls">
+                                    <button onclick="addStudent()" type="button" class="btn btn-success">Add</button>
+                                    <span class="alert alert-success" role="alert" id='messageDiv4' style="display: none;
+                                    z-index:1001;text-align: center; padding: 15px 40px; font-size: large;">
+                                    </span>
                             </div>
                         </div>
-                        <input name="manageType" value="addStudent" type="hidden">
-                    </form>
-                </div>
+                    </div>
+                    <input id="addStudentManage" name="manageType" value="addStudent" type="hidden">
+                </form>
+            </div>
 
             <!-- Grades form -->
-        
-                <!-- Delete form -->
-                <div class="col-md-6" v-show="checkSelected('7')">
-                    <p>Grade Delete</p>
-                    <form class="form-horizontal" action="" method="POST">
-                        <div class="mt-4 col-md-12">
-                            <div class="control-group">
-                                <label class="control-label" for="email">name</label>
-                                <div class="controls">
-                                    <input type="email" id="email" name="email" placeholder=""
-                                        class="form-control input-lg">
-                                </div>
+
+            <!-- Delete form -->
+            <div class="col-md-6" v-show="checkSelected('7')">
+                <p>Grade Delete</p>
+                <form class="form-horizontal" action="" method="POST">
+                    <div class="mt-4 col-md-12">
+                        <div class="control-group">
+                            <label class="control-label" for="email">name</label>
+                            <div class="controls">
+                                <input type="email" id="email" name="email" placeholder=""
+                                    class="form-control input-lg">
                             </div>
                         </div>
-                        <div class="mt-4 col-md-12">
-                            <div class="control-group">
-                                <!-- Button -->
-                                <div class="controls">
-                                    <button class="btn btn-danger">Delete</button>
-                                </div>
+                    </div>
+                    <div class="mt-4 col-md-12">
+                        <div class="control-group">
+                            <!-- Button -->
+                            <div class="controls">
+                                <button class="btn btn-danger">Delete</button>
                             </div>
                         </div>
-                    </form>
-                </div>
+                    </div>
+                </form>
+            </div>
 
-                <!-- Add form -->
-                <div class="col-md-6" v-show="checkSelected('8')">
-                    <p>Grade Add</p>
+            <!-- Add form -->
+            <div class="col-md-6" v-show="checkSelected('8')">
+                <p>Grade Add</p>
 
-                    <form class="form-horizontal" action="{% url 'manage' %}" method="POST">
-                        {% csrf_token %}
-                        <div class="mt-5 col-md-12">
-                            <div class="control-group">
-                                <label class="control-label" for="gradeName">name</label>
-                                <div class="controls">
-                                    <input type="text" id="gradeName" name="gradeName" placeholder=""
-                                        class="form-control input-lg">
-                                </div>
+                <form class="form-horizontal" action="{% url 'manage' %}" method="POST">
+                    {% csrf_token %}
+                    <div class="mt-5 col-md-12">
+                        <div class="control-group">
+                            <label class="control-label" for="gradeName">name</label>
+                            <div class="controls">
+                                <input type="text" id="gradeName" name="gradeName" placeholder=""
+                                    class="form-control input-lg">
                             </div>
+                        </div>
 
+                    </div>
+
+                    <div class="mt-5 col-md-12">
+                        <div class="control-group">
+                            <!-- Button -->
+                            <div class="controls">
+                                <button onclick="addGrade()" type="button" class="btn btn-success">Add Grade</button>
+                                <span class="alert alert-success" role="alert" id='messageDiv1' style="display: none;
+                                z-index:1001;text-align: center; padding: 15px 40px; font-size: large;">
+                                </span>
+                            </div>
                         </div>
                         
-                        <div class="mt-5 col-md-12">
-                            <div class="control-group">
-                                <!-- Button -->
-                                <div class="controls">
-                                    <button type="submit" class="btn btn-success">Add Grade</button>
-                                </div>
-                            </div>
-                        </div>
-                        <input name="manageType" value="addGrade" type="hidden">
-                    </form>
-                </div>
-            
+                    </div>
+
+
+                    <input id="addGradeManage" name="manageType" value="addGrade" type="hidden">
+                </form>
+            </div>
+
         </div>
     </div>
 </div>
@@ -332,12 +381,13 @@
 {% endblock %}
 
 {% block script%}
-  <!-- Vue script -->
-  <script src="{% static 'js/vue.js' %}"></script>
+<!-- Vue script -->
+<script src="{% static 'js/vue.js' %}"></script>
 
-  <!-- manageVue script -->
-  <script src="{% static 'js/manageVue.js' %}"></script>
+<!-- manageVue script -->
+<script src="{% static 'js/manageVue.js' %}"></script>
 
-  <!-- webcam js-->
-  <script src="{% static 'js/webcam.js' %} "></script>
+<!-- webcam js-->
+<script src="{% static 'js/webcam.js' %} "></script>
+
 {% endblock %}

@@ -43,35 +43,33 @@ function videoImageToDataURL(refreshIntervalId){
 }
 
 function handleLogic(){
-  if(img_count!=20){
-    if (img_count%10 ==0)
-    {
-      // test
-      alert(img_count);
-    }
+  if(img_count!=100){
+    $(document).ready( function(){
+      $("#messageDiv5").html(img_count).show('fast');
+    });
   img_count = img_count +1;
   videoImageToDataURL();
   }
+  
   else{
-    var myform = document.getElementById('studentAddForm')
-    var hiddenInput = document.createElement('input')
+    $(document).ready( function(){
+      $("#messageDiv5").addClass('alert alert-success').removeClass('alert alert-danger').html("Done").delay(1500).fadeOut('fast');
+    });
 
-    hiddenInput.type = 'hidden'
-    hiddenInput.name = 'dataUrls'
+    var myform = document.getElementById('studentAddForm')
+    var hiddenInput = document.getElementById('studentPhotos')
+
     hiddenInput.value = JSON.stringify(dataUrls)
 
     myform.appendChild(hiddenInput)
     
     clearInterval(interval_ID)
     closeWebCam();
-
-    window.alert('photos has been taken')
-
   }
 }
 
 function startImageHandler(){
-  interval_ID = setInterval(handleLogic, 500);
+  interval_ID = setInterval(handleLogic, 250);
 }
 
 
